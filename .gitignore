@@ -1,0 +1,24 @@
+# Build output
+target/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# OS
+.DS_Store
+
+# Runtime helper files
+cp.txt
+run.log
+
+# Runtime data — keep the folders, ignore generated contents
+data/in/.done/
+data/out/*
+data/error/*
+data/temp/*
+data/audit/*
+!data/**/.gitkeep
