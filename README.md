@@ -19,6 +19,14 @@ Imagine an online store that receives customer orders as plain-text files. Each 
 
 while staying up under failure conditions (locked files, an unavailable output folder, empty or malformed input) and printing a health report every 10 seconds.
 
+## Architecture
+
+The pipeline is modeled as a Data Flow Diagram using Enterprise Integration Patterns (EIP). Order files enter through `data/in` and flow along the main **order-processor** route to `data/out`, with dedicated paths for auditing, error handling, and temp buffering, plus an independent **status-report** route.
+
+![Data Flow Diagram of the Order Integration System](docs/diagrams/order-integration-system.png)
+
+> Editable source: [`order-integration-system.drawio`](docs/diagrams/order-integration-system.drawio) — open with [draw.io](https://app.diagrams.net/).
+
 ## Features
 
 - **Automatic polling** of the input folder (no manual trigger).
@@ -42,7 +50,7 @@ For empty or malformed files (fewer than four fields), the system logs the issue
 | Pattern | Where |
 |---------|-------|
 | **Pipes and Filters** | The main route: read → validate → transform → write |
-| **Message Translator** | `OrderTransformer` — appends the timestamp |
+| **Content Enricher** | `OrderTransformer` — appends the timestamp |
 | **Polling Consumer** | `from("file:data/in?delay=3000")` |
 | **Wire Tap** | `wireTap("direct:audit")` — asynchronous archive copy |
 | **Dead Letter Channel** | `moveFailed=../error` + error handler |
@@ -108,6 +116,25 @@ The app starts polling `data/in`. Drop an order file there and watch it flow to 
 ```bash
 mvn test
 ```
+
+## Visualize the routes (Hawtio)
+
+The app registers with the Camel CLI (via `camel-cli-connector`), so you can view the routes in the [Hawtio](https://hawt.io/) web console.
+
+```bash
+brew install jbang
+jbang app install camel@apache/camel
+jbang trust add https://github.com/apache/camel/
+
+# with the app running (mvn exec:java), in another terminal:
+camel ps                        # find the app NAME 
+camel get route                 # list routes in the terminal
+camel hawtio <app-name> --openUrl  # open Hawtio dashboard
+```
+
+## Screenshots
+
+See **[docs/SCREENSHOTS.md](docs/SCREENSHOTS.md)** for a visual walkthrough — Hawtio route diagrams, runtime and error logs, test results, and data-flow results.
 
 ## Input & output format
 
