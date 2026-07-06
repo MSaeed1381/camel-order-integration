@@ -136,6 +136,12 @@ camel hawtio <app-name> --openUrl  # open Hawtio dashboard
 
 See **[docs/SCREENSHOTS.md](docs/SCREENSHOTS.md)** for a visual walkthrough — Hawtio route diagrams, runtime and error logs, test results, and data-flow results.
 
+## Reports
+
+Written deliverables live in **[docs/reports/](docs/reports/)**:
+
+- [**Phase 1 — Process design & Data Flow Diagram**](docs/reports/phase1-report.pdf) (PDF)
+
 ## Input & output format
 
 Each input file contains **one order** as a single comma-separated line:
