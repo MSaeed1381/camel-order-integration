@@ -1,0 +1,128 @@
+%!TEX program = xelatex
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[top=30mm,bottom=25mm,left=25mm,right=25mm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\definecolor{sbublue}{RGB}{31,78,121}
+\definecolor{sbublue2}{RGB}{46,116,181}
+\usepackage{enumitem}
+\usepackage[font=small,labelfont=bf,skip=5pt]{caption}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{xepersian}
+\settextfont[BoldFont={IRLotusICEE_Bold.ttf},
+             ItalicFont={IRLotusICEE_Iranic.ttf},
+             BoldItalicFont={IRLotusICEE_BoldIranic.ttf},
+             Scale=1.15]{IRLotusICEE.ttf}
+\setlatintextfont[Scale=1.0]{Times New Roman}
+
+\setfootnoteLR
+
+\renewcommand{\figurename}{تصویر}
+\renewcommand{\contentsname}{فهرست مطالب}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{sbublue}}{\thesection}{0.6em}{}
+\titlespacing{\section}{0pt}{16pt plus 3pt minus 2pt}{6pt}
+
+\linespread{1.45}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{2pt}
+
+\newlist{terms}{itemize}{1}
+\setlist[terms]{label=$\bullet$, leftmargin=1.6em, itemsep=3pt, topsep=3pt, parsep=0pt}
+\newcommand{\term}[1]{\textbf{\textcolor{sbublue2}{#1:}}}
+
+\begin{document}
+\renewcommand{\figurename}{تصویر}
+
+\begin{titlepage}
+\centering
+\vspace*{2mm}
+\includegraphics[width=3.4cm]{sbu_logo.png}\\[3mm]
+{\large\bfseries دانشگاه شهید بهشتی}\\[1.5mm]
+{\normalsize دانشکده مهندسی و علوم کامپیوتر}\\[16mm]
+
+{\normalsize\bfseries گزارش فاز اول پروژه‌ی درس سیستم‌های نرم‌افزاری مقیاس‌وسیع \lr{(ULS)}}\\[12mm]
+
+{\LARGE\bfseries\color{sbublue} طراحی و مدل‌سازی فرآیند\\[2mm]
+یکپارچه‌سازی سفارش‌های فروشگاه اینترنتی}\\[6mm]
+
+{\normalsize گرایش نرم‌افزار}\\[18mm]
+
+{\large دانشجویان:}\\[1.5mm]
+{\large\bfseries شبنم جلیل‌پور}\\[1.5mm]
+{\large\bfseries محمدسعید زارع مهرجردی}\\[12mm]
+
+{\large استاد راهنما:}\\[1.5mm]
+{\large\bfseries دکتر فریدون شمس}\\[10mm]
+
+\vfill
+{\large تیر ۱۴۰۵}
+\end{titlepage}
+
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+\setcounter{page}{1}
+
+\section{مقدمه و تبیین مسئله}
+در سازمان‌های امروزی، سیستم‌های اطلاعاتی و برنامه‌های کاربردی به دلایل مختلف به‌صورت جزیره‌ای و ناهمگون توسعه یافته‌اند. یکپارچه‌سازی نرم‌افزارهای سازمان\footnote{\lr{Enterprise Application Integration (EAI)}} ابزار و رویکردی است که به این برنامه‌ها اجازه می‌دهد تا فرآیندها و داده‌های خود را با یکدیگر به اشتراک بگذارند.
+
+در این پروژه، سناریوی یک فروشگاه اینترنتی مطرح است که سفارش‌های مشتریان را در قالب فایل‌های متنی (شامل نام مشتری، محصول، تعداد و قیمت) در یک پوشه‌ی ورودی دریافت می‌کند. هدف فاز اول، طراحی و مدل‌سازی معماری این سیستم یکپارچه‌سازی به‌گونه‌ای است که عملیات خواندن، غنی‌سازی داده (افزودن زمان دریافت\footnote{\lr{Timestamp}})، اعتبارسنجی، مدیریت خطاهای احتمالی و گزارش‌دهی دوره‌ای وضعیت سیستم را به‌صورت کاملاً خودکار، بدون توقف و مبتنی بر الگوهای استاندارد یکپارچه‌سازی سازمانی\footnote{\lr{Enterprise Integration Patterns (EIP)}} انجام دهد.
+
+\section{تعیین سبک و سطح یکپارچه‌سازی}
+بر اساس مفاهیم پایه‌ی درس، چهار سبک اصلی برای یکپارچه‌سازی وجود دارد:
+\begin{terms}
+  \item انتقال فایل\footnote{\lr{File Transfer}}
+  \item پایگاه‌داده‌ی مشترک\footnote{\lr{Shared Database}}
+  \item فراخوانی رویه از راه دور\footnote{\lr{Remote Procedure Call (RPC)}}
+  \item پیام‌رسانی\footnote{\lr{Messaging}}
+\end{terms}
+این پروژه در سطح داده و بر پایه‌ی ترکیبی از دو سبک معماری طراحی شده است:
+\begin{terms}
+  \item \term{سبک انتقال فایل} بستر فیزیکی تبادل داده‌ها بر اساس فایل است. سیستم‌های بیرونی سفارش‌ها را در پوشه‌ی ورودی می‌نویسند و خروجی نیز در قالب فایل ذخیره می‌شود. این سبک، عدم وابستگی زمانی و مکانی مناسبی ایجاد می‌کند.
+  \item \term{سبک پیام‌رسانی} برای پیاده‌سازی داخلی لایه‌ی میانی، از دیدگاه پیام‌رسانی استفاده شده است. چارچوب \lr{Apache Camel} هر فایل ورودی را به‌عنوان یک پیام و مسیرهای پردازش را به‌عنوان کانال پیام در نظر می‌گیرد. این ترکیب به ما اجازه می‌دهد از مزایای اتصال سست\footnote{\lr{Loose Coupling}} در این بستر بهره‌مند شویم.
+\end{terms}
+
+\section{معماری سیستم و الگوهای مسیریابی}
+ساختار اصلی پردازش سفارش‌ها در این سیستم بر اساس الگوی لوله‌ها و فیلترها\footnote{\lr{Pipes and Filters}} مدل‌سازی شده است. در این الگو، هر گام پردازشی یک فیلتر مستقل است و پیام‌ها از طریق کانال‌ها بین این فیلترها جریان دارند. نمای کلی این معماری در تصویر~\ref{fig:dfd} نشان داده شده است.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.84\textwidth]{dfd.png}
+  \caption{نمودار جریان داده‌ی فرآیند یکپارچه‌سازی سفارش‌های فروشگاه اینترنتی}
+  \label{fig:dfd}
+\end{figure}
+
+همان‌طور که در نمودار بالا مشاهده می‌شود، مؤلفه‌ها و فیلترهای اصلی این سیستم عبارت‌اند از:
+\begin{terms}
+  \item \term{مصرف‌کننده‌ی دوره‌ای}\footnote{\lr{Polling Consumer}} سیستم به‌صورت دوره‌ای پوشه‌ی ورودی (\lr{data/in}) را سرکشی کرده و به‌محض یافتن فایل جدید، آن را به‌عنوان یک پیام وارد سیستم می‌کند.
+  \item \term{شنود پیام}\footnote{\lr{Wire Tap}} به‌منظور ثبت وقایع، بلافاصله پس از ورود فایل و پیش از هرگونه پردازش، یک کپی از پیام اصلی به‌صورت ناهمگام به پوشه‌ی بایگانی (\lr{data/audit}) ارسال می‌شود تا لاگی از تمام پیام‌های دریافتی وجود داشته باشد. این الگو مسیریابی ساده‌ای است که پیام را تکثیر کرده و یک کپی از آن را بدون ایجاد تأخیر در مسیر اصلی، به‌صورت ناهمگام پردازش می‌کند.
+  \item \term{فیلتر پیام}\footnote{\lr{Message Filter}} این مؤلفه وظیفه‌ی اعتبارسنجی را بر عهده دارد. در صورتی که فایل ورودی خالی یا ناقص باشد، پیام فیلتر شده و به مسیر خطا\footnote{\lr{Dead Letter Channel}} در پوشه‌ی \lr{data/error} هدایت می‌شود.
+  \item \term{غنی‌ساز پیام}\footnote{\lr{Content Enricher}} سفارش‌های معتبر وارد این گام می‌شوند. سیستم اطلاعات زمان دریافت را از ساعت داخلی سرور دریافت کرده و به محتوای پیام اضافه می‌کند.
+  \item \term{نقطه‌ی پایانی پیام}\footnote{\lr{Message Endpoint}} در نهایت، پیام غنی‌شده به پوشه‌ی خروجی (\lr{data/out}) که به‌عنوان نقطه‌ی پایانی سیستم عمل می‌کند، منتقل و ذخیره می‌گردد.
+  \item \term{تحویل تضمین‌شده}\footnote{\lr{Guaranteed Delivery}} در صورت خطای خروجی، داده‌ها موقتاً در پوشه‌ی جایگزین (\lr{data/temp}) ذخیره می‌شوند تا پس از رفع مشکل ارسال گردند.
+  \item \term{پایش و گزارش‌گیری}\footnote{\lr{Control Bus}} سرویسی موازی با فرآیند اصلی که به‌منظور مدیریت و نظارت، هر ۱۰ ثانیه گزارش وضعیت سامانه را در کنسول چاپ می‌کند.
+\end{terms}
+
+\section{تحلیل سناریوهای خطا و افزایش تاب‌آوری}
+سیستم برای تضمین پایداری در مقیاس وسیع، سه سناریوی خطا را به کمک الگوهای \lr{EIP} مدیریت می‌کند:
+\begin{terms}
+  \item \term{خطای خواندن/نوشتن}\footnote{\lr{IOException}} سیستم تا ۳ بار تلاش مجدد\footnote{\lr{Retry / Redelivery}} می‌کند؛ در صورت تداوم خطا، پیام بدون متوقف‌کردن سیستم به کانال پیام‌های مرده در \lr{data/error} منتقل می‌شود.
+  \item \term{عدم دسترسی به پوشه‌ی خروجی} در این صورت داده‌ها موقتاً در پوشه‌ی واسط (\lr{data/temp}) ذخیره شده و پس از رفع مشکل، به مسیر اصلی بازمی‌گردند.
+  \item \term{فایل خالی یا ناقص} توسط الگوی کانال پیام‌های نامعتبر\footnote{\lr{Invalid Message Channel}}، این فایل‌ها جداسازی شده و مستقیماً به پوشه‌ی خطا فرستاده می‌شوند تا پردازش سایر فایل‌ها بدون وقفه ادامه یابد.
+\end{terms}
+
+\section{پایش سیستم و گذرگاه کنترل}
+به‌منظور نظارت بر سلامت و کارایی سیستم، یک فرآیند موازی و مستقل بر اساس الگوی گذرگاه کنترل طراحی شده است. این سرویس به کمک یک کامپوننت تایمر، هر ۱۰ ثانیه یک‌بار فعال شده و معیارهای حیاتی سیستم (تعداد فایل‌های موفق، ناموفق و موقت) را که در شمارنده‌های ایمن از نظر هم‌روندی ذخیره شده‌اند، در کنسول نمایش می‌دهد تا مدیران سیستم از زنده‌بودن فرآیند مطمئن شوند.
+
+\section{جمع‌بندی}
+در این فاز از پروژه، سناریوی فروشگاه اینترنتی به‌عنوان یک یکپارچه‌سازی درون‌سازمانی\footnote{\lr{Application-to-Application (A2A)}} در سطح داده و بر پایه‌ی الگوی استخراج، تبدیل و بارگذاری\footnote{\lr{Extract, Transform, Load (ETL) --- Population Pattern}} مدل‌سازی شد. این معماری، ترکیبی از بستر فیزیکی انتقال فایل و منطق پیام‌رسانی است که با چارچوب \lr{Apache Camel} مدیریت می‌شود. خروجی‌های این فاز — نمودار جریان داده، شناسایی مؤلفه‌ها و کانال‌های ارتباطی، و همین گزارش توصیفی — پایه‌ی مستقیم پیاده‌سازی فاز دوم را فراهم می‌کنند.
+
+\end{document}
