@@ -140,7 +140,8 @@ See **[docs/SCREENSHOTS.md](docs/SCREENSHOTS.md)** for a visual walkthrough — 
 
 Written deliverables live in **[docs/reports/](docs/reports/)**:
 
-- [**Phase 1 — Process design & Data Flow Diagram**](docs/reports/phase1-report.pdf) (PDF)
+- [**Phase 1 — Process design & Data Flow Diagram**](docs/reports/phase1-report.pdf) (PDF, Persian)
+  - Editable LaTeX source: [`docs/reports/phase1-latex/`](docs/reports/phase1-latex/) — see its [README](docs/reports/phase1-latex/README.md) for how to compile (XeLaTeX).
 
 ## Input & output format
 
