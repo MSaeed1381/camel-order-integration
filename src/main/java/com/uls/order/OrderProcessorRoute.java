@@ -2,8 +2,7 @@ package com.uls.order;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-
-import java.io.IOException;
+import org.apache.camel.component.file.GenericFileOperationFailedException;
 
 
 public class OrderProcessorRoute extends RouteBuilder {
@@ -21,9 +20,9 @@ public class OrderProcessorRoute extends RouteBuilder {
                 .log(LoggingLevel.ERROR, "Invalid file: ${exception.message} -> moved to data/error")
                 .process(e -> Stats.failed.incrementAndGet());
 
-
-        onException(IOException.class)
+        onException(GenericFileOperationFailedException.class)
                 .handled(true)
+                .maximumRedeliveries(0)
                 .log(LoggingLevel.WARN, "Output folder unavailable; buffering to data/temp: ${header.CamelFileName}")
                 .process(e -> Stats.buffered.incrementAndGet())
                 .to("file:data/temp");
@@ -39,8 +38,15 @@ public class OrderProcessorRoute extends RouteBuilder {
                 .to("file:data/out")
                 .process(e -> Stats.processed.incrementAndGet());
 
-        from("file:data/temp?delay=15000")
+        from("file:data/temp?delay=5000&delete=true")
                 .routeId("temp-recovery")
+                .onException(GenericFileOperationFailedException.class)
+                    .maximumRedeliveries(0)
+                    .handled(false)
+                    .logExhausted(false)
+                    .logStackTrace(false)
+                    .log(LoggingLevel.WARN, "Output still unavailable; keeping file in data/temp: ${header.CamelFileName}")
+                .end()
                 .log("[thread: ${threadName}] Moving buffered file to output: ${header.CamelFileName}")
                 .to("file:data/out")
                 .process(e -> {

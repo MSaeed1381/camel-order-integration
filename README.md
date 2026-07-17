@@ -5,7 +5,7 @@ A small but **resilient file-based order-processing pipeline** built with **Apac
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Apache Camel](https://img.shields.io/badge/Apache%20Camel-4.8-blueviolet)
 ![Maven](https://img.shields.io/badge/Build-Maven-red)
-![Tests](https://img.shields.io/badge/tests-6%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-14%20passing-brightgreen)
 
 ---
 
@@ -81,6 +81,7 @@ order-integration/
 │   │   └── Stats.java                # thread-safe counters
 │   └── test/java/com/uls/order/
 │       ├── OrderProcessorRouteTest.java
+│       ├── OrderValidatorTest.java
 │       └── OrderTransformerTest.java
 └── data/
     ├── in/     # input order files
