@@ -15,6 +15,9 @@ target/
 cp.txt
 run.log
 
+# Private grading/review notes — not part of the deliverable
+docs/reports/review-phase1/
+
 # Runtime data — keep the folders, ignore generated contents
 data/in/.done/
 data/out/*

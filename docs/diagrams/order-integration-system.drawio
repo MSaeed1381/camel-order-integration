@@ -55,10 +55,10 @@
         <mxCell id="_eH_RoX5EGU6ifbE61qW-17" parent="1" style="shape=mxgraph.eip.dead_letter_channel;html=1;fillColor=#99FF99;strokeColor=#000000;verticalLabelPosition=bottom;verticalAlign=top;fontSize=10;rounded=0;" value="Dead Letter Channel&#xa;(after retry x3)" vertex="1">
           <mxGeometry height="60" width="80" x="110" y="-187" as="geometry" />
         </mxCell>
-        <mxCell id="_eH_RoX5EGU6ifbE61qW-18" parent="1" style="shape=mxgraph.eip.messaging_bridge;html=1;fillColor=#99FF99;strokeColor=#000000;verticalLabelPosition=bottom;verticalAlign=top;fontSize=10;rounded=0;" value="temp-recovery&#xa;(Messaging Bridge)" vertex="1">
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-18" parent="1" style="shape=mxgraph.eip.messaging_bridge;html=1;fillColor=#99FF99;strokeColor=#000000;verticalLabelPosition=bottom;verticalAlign=top;fontSize=10;rounded=0;" value="temp-recovery&#xa;(Guaranteed Delivery)" vertex="1">
           <mxGeometry height="60" width="80" x="667" y="535" as="geometry" />
         </mxCell>
-        <mxCell id="_eH_RoX5EGU6ifbE61qW-19" parent="1" style="shape=mxgraph.eip.polling_consumer;html=1;fillColor=#99FF99;strokeColor=#000000;verticalLabelPosition=bottom;verticalAlign=top;fontSize=10;rounded=0;" value="Timer 10s&#xa;(Polling Consumer)" vertex="1">
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-19" parent="1" style="shape=mxgraph.eip.polling_consumer;html=1;fillColor=#99FF99;strokeColor=#000000;verticalLabelPosition=bottom;verticalAlign=top;fontSize=10;rounded=0;" value="Timer 10s&#xa;(Scheduler)" vertex="1">
           <mxGeometry height="60" width="80" x="117" y="196" as="geometry" />
         </mxCell>
         <mxCell id="_eH_RoX5EGU6ifbE61qW-20" parent="1" style="shape=mxgraph.eip.control_bus;html=1;fillColor=#99FF99;strokeColor=#000000;verticalLabelPosition=bottom;verticalAlign=top;fontSize=10;rounded=0;" value="Status report&#xa;(Control Bus)" vertex="1">
@@ -107,7 +107,7 @@
         <mxCell id="_eH_RoX5EGU6ifbE61qW-33" edge="1" parent="1" source="_eH_RoX5EGU6ifbE61qW-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeColor=#b85450;" target="_eH_RoX5EGU6ifbE61qW-9" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="_eH_RoX5EGU6ifbE61qW-34" edge="1" parent="1" source="_eH_RoX5EGU6ifbE61qW-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeColor=#9673a6;fontSize=10;fontColor=#9673a6;" target="_eH_RoX5EGU6ifbE61qW-10" value="IOException">
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-34" edge="1" parent="1" source="_eH_RoX5EGU6ifbE61qW-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeColor=#9673a6;fontSize=10;fontColor=#9673a6;" target="_eH_RoX5EGU6ifbE61qW-10" value="write failed">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_eH_RoX5EGU6ifbE61qW-35" edge="1" parent="1" source="_eH_RoX5EGU6ifbE61qW-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeColor=#9673a6;" target="_eH_RoX5EGU6ifbE61qW-18" value="">
@@ -140,8 +140,20 @@
         <mxCell id="_eH_RoX5EGU6ifbE61qW-44" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=10;" value="External entity" vertex="1">
           <mxGeometry height="24" width="105" x="527" y="665" as="geometry" />
         </mxCell>
-        <mxCell id="_eH_RoX5EGU6ifbE61qW-45" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#5c6675;rounded=0;" value="Edges:   main flow (bold blue)    error (red dashed)    recovery / buffer (purple dashed)    async wire-tap (blue dashed)" vertex="1">
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-45" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#5c6675;rounded=0;" value="Edges:   main flow (bold blue)    error (red dashed)    recovery / buffer (purple dashed)    async wire-tap (blue dashed)    shared metrics (gray dotted)" vertex="1">
           <mxGeometry height="20" width="880" x="135" y="691" as="geometry" />
+        </mxCell>
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Stats&#xa;(shared counters)" vertex="1">
+          <mxGeometry height="52" width="100" x="258" y="372" as="geometry" />
+        </mxCell>
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-47" edge="1" parent="1" source="_eH_RoX5EGU6ifbE61qW-16" target="_eH_RoX5EGU6ifbE61qW-46" style="html=1;endArrow=block;dashed=1;dashPattern=1 4;strokeColor=#808080;fontSize=10;fontColor=#808080;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" value="updates metrics">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-48" edge="1" parent="1" source="_eH_RoX5EGU6ifbE61qW-46" target="_eH_RoX5EGU6ifbE61qW-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;dashPattern=1 4;strokeColor=#808080;fontSize=10;fontColor=#808080;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" value="reads">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_eH_RoX5EGU6ifbE61qW-49" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Metrics (shared)" vertex="1">
+          <mxGeometry height="24" width="110" x="637" y="665" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
